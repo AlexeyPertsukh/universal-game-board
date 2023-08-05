@@ -5,32 +5,27 @@ import org.example.examples.tictactoe.controller.CoordinateConverter;
 
 public class Mover {
     private final static String ERROR = "illegal move";
-    private final TicTacToeBaseBoard board;
-    private final CoordinateConverter coordinateConverter;
+    private final TicTacToeBoard board;
 
-    public Mover(TicTacToeBaseBoard board, CoordinateConverter coordinateConverter) {
+    public Mover(TicTacToeBoard board, CoordinateConverter coordinateConverter) {
         this.board = board;
-        this.coordinateConverter = coordinateConverter;
     }
 
-    public void move(String wayTo, char figure) {
-        if (wayTo.length() != 1) {
-            throw new MoverException(ERROR + ", must be one character: " + wayTo);
-        }
-        char ch = wayTo.charAt(0);
-        Coordinate coordinate = coordinateConverter.charToCoordinate(ch);
+    public void move(Coordinate to, char figure) {
+        validate(to);
+        board.put(to, figure);
+    }
 
-        if (coordinate.row >= board.rows() || coordinate.row < 0 || coordinate.column >= board.columns() || coordinate.column < 0) {
-            String message = ERROR + String.format(", the coordinate is outside the board: %c -> [row = %d, column = %d]", ch, coordinate.row, coordinate.column);
+    private void validate(Coordinate to) {
+        if (to.row >= board.rows() || to.row < 0 || to.column >= board.columns() || to.column < 0) {
+            String message = String.format("%s, the coordinate is outside the board: [row = %d, column = %d]", ERROR, to.row, to.column);
             throw new MoverException(message);
         }
 
-        if (!board.isEmptyPlace(coordinate)) {
-            String message = ERROR + String.format(", place is busy: %c -> [row = %d, column = %d]", ch, coordinate.row, coordinate.column);
+        if (!board.isEmptyPlace(to)) {
+            String message = String.format("%s, place is busy: [row = %d, column = %d]", ERROR, to.row, to.column);
             throw new MoverException(message);
         }
-
-        board.put(coordinate, figure);
     }
 
     public static class MoverException extends RuntimeException {

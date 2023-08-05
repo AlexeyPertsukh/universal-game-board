@@ -29,7 +29,6 @@ public class Game {
             } catch (CoordinateConverter.ConverterException | Mover.MoverException e) {
                 System.out.println(e.getMessage());
             }
-
         }
 
     }

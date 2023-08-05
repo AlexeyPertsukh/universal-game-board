@@ -1,7 +1,8 @@
 package org.example.examples.tictactoe.controller;
 
+import org.example.board.Coordinate;
 import org.example.examples.tictactoe.model.Mover;
-import org.example.examples.tictactoe.model.TicTacToeBaseBoard;
+import org.example.examples.tictactoe.model.TicTacToeBoard;
 
 import java.util.Scanner;
 
@@ -9,34 +10,39 @@ public class Game {
     private static final char[] figures = {'X', '0'};
     private final Scanner scanner = new Scanner(System.in);
 
-    private final TicTacToeBaseBoard board = new TicTacToeBaseBoard();
+    private final TicTacToeBoard board = new TicTacToeBoard();
     private final CoordinateConverter coordinateConverter = new CoordinateConverter(board, 'a');
     private final BoardRenderer boardRenderer = new BoardRenderer(board, coordinateConverter);
     private final Mover mover = new Mover(board, coordinateConverter);
+    private char currentFigure = figures[0];
 
     public void go() {
-        char currentFigure = figures[0];
-
-        boardRenderer.show();
-        System.out.println();
+        printBoard();
 
         while (true) {
 
-            System.out.println(currentFigure + ", move:");
+            System.out.println("move:");
+            String address = scanner.next();
 
-            String wayTo = scanner.next();
+            try {
+                Coordinate to = coordinateConverter.addressToCoordinate(address);
+                mover.move(to, currentFigure);
+                changeFigure();
+                printBoard();
 
-            try{
-                mover.move(wayTo, currentFigure);
-            } catch (Mover.MoverException e) {
+            } catch (CoordinateConverter.ConverterException | Mover.MoverException e) {
                 System.out.println(e.getMessage());
-                continue;
             }
 
-            currentFigure = currentFigure == figures[0] ? figures[1] : figures[0];
-            boardRenderer.show();
-            System.out.println();
-
         }
+    }
+
+    private void changeFigure() {
+        currentFigure = currentFigure == figures[0] ? figures[1] : figures[0];
+    }
+
+    private void printBoard() {
+        boardRenderer.show();
+        System.out.println();
     }
 }

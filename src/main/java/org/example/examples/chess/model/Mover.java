@@ -4,19 +4,27 @@ import org.example.board.Coordinate;
 
 public class Mover {
     private final ChessBoard board;
-    private final static String ERROR = "illegal move" ;
+    private final static String ERROR = "illegal move";
 
     public Mover(ChessBoard board) {
         this.board = board;
     }
 
     public void move(Coordinate from, Coordinate to) {
-        if(!isValidCoordinate(from)) {
+        validate(from, to);
+
+        Piece piece = board.remove(from);
+        board.put(to, piece);
+
+    }
+
+    private void validate(Coordinate from, Coordinate to) {
+        if (!isValidCoordinate(from)) {
             String message = String.format("%s, the coordinate is outside the board: %s]", ERROR, from);
             throw new MoverException(message);
         }
 
-        if(!isValidCoordinate(to)) {
+        if (!isValidCoordinate(to)) {
             String message = String.format("%s, the coordinate is outside the board: %s]", ERROR, to);
             throw new MoverException(message);
         }
@@ -31,10 +39,6 @@ public class Mover {
             String message = String.format("%s, you cannot kill a chess piece of your own color", ERROR);
             throw new MoverException(message);
         }
-
-        board.remove(from);
-        board.put(to, piece);
-
     }
 
     private boolean isValidCoordinate(Coordinate c) {
