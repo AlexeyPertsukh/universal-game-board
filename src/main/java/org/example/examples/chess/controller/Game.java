@@ -14,23 +14,29 @@ public class Game {
     private final BoardRenderer boardRenderer = new BoardRenderer(board);
     private final CoordinateConverter coordinateConverter = new CoordinateConverter();
     private final Mover mover = new Mover(board);
+    private Piece.Color moveColor = Piece.Color.WHITE;
 
     public void go() {
         printBoard();
 
         while (true) {
-            System.out.println("move:");
+            System.out.printf("[%s] move: \n", moveColor);
             String keyWay = scanner.next();
 
             try {
                 CoordinateConverter.Way way = coordinateConverter.stringToWay(keyWay);
-                mover.move(way.from, way.to);
+                mover.move(moveColor, way.from, way.to);
+                changeMoveColor();
                 printBoard();
             } catch (CoordinateConverter.ConverterException | Mover.MoverException e) {
                 System.out.println(e.getMessage());
             }
         }
 
+    }
+
+    private void changeMoveColor() {
+        moveColor = moveColor == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
     }
 
     private void printBoard() {

@@ -10,15 +10,15 @@ public class Mover {
         this.board = board;
     }
 
-    public void move(Coordinate from, Coordinate to) {
-        validate(from, to);
+    public void move(Piece.Color moveColor, Coordinate from, Coordinate to) {
+        validate(moveColor, from, to);
 
         Piece piece = board.remove(from);
         board.put(to, piece);
 
     }
 
-    private void validate(Coordinate from, Coordinate to) {
+    private void validate(Piece.Color moveColor, Coordinate from, Coordinate to) {
         if (!isValidCoordinate(from)) {
             String message = String.format("%s, the coordinate is outside the board: %s]", ERROR, from);
             throw new MoverException(message);
@@ -35,8 +35,14 @@ public class Mover {
         }
 
         Piece piece = board.get(from);
+
+        if(moveColor != piece.getColor()) {
+            String message = String.format("%s, your color is %s, you can't move %s pieces", ERROR, moveColor, piece.getColor());
+            throw new MoverException(message);
+        }
+
         if (!board.isEmptyPlace(to) && board.get(to).getColor() == piece.getColor()) {
-            String message = String.format("%s, you cannot kill a chess piece of your own color", ERROR);
+            String message = String.format("%s, you can't kill a chess piece of your own color", ERROR);
             throw new MoverException(message);
         }
     }

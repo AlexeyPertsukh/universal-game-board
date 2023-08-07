@@ -21,7 +21,7 @@ public class Game {
 
         while (true) {
 
-            System.out.println("move:");
+            System.out.printf("[%c] move: \n", currentFigure);
             String address = scanner.next();
 
             try {
