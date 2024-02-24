@@ -22,7 +22,7 @@ public class Mover {
             throw new MoverException(message);
         }
 
-        if (!board.isEmptyPlace(to)) {
+        if (!board.isEmpty(to)) {
             String message = String.format("%s, place is busy: [row = %d, column = %d]", ERROR, to.row, to.column);
             throw new MoverException(message);
         }

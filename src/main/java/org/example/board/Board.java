@@ -19,7 +19,7 @@ public interface Board<T> {
 
     T remove(Coordinate coordinate);
 
-    boolean isEmptyPlace(int row, int column);
+    boolean isEmpty(int row, int column);
 
-    boolean isEmptyPlace(Coordinate coordinate);
+    boolean isEmpty(Coordinate coordinate);
 }

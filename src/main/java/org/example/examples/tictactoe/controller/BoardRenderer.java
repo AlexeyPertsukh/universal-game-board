@@ -20,7 +20,7 @@ public class BoardRenderer {
                 Coordinate coordinate = new Coordinate(row, column);
 
                 char ch;
-                if (board.isEmptyPlace(coordinate)) {
+                if (board.isEmpty(coordinate)) {
                     ch = coordinateConverter.coordinateToAddress(coordinate);
                 } else {
                     ch = board.get(coordinate);

@@ -29,7 +29,7 @@ public class Mover {
             throw new MoverException(message);
         }
 
-        if (board.isEmptyPlace(from)) {
+        if (board.isEmpty(from)) {
             String message = String.format("%s, no figure by coordinate: %s", ERROR, from);
             throw new MoverException(message);
         }
@@ -41,7 +41,7 @@ public class Mover {
             throw new MoverException(message);
         }
 
-        if (!board.isEmptyPlace(to) && board.get(to).getColor() == piece.getColor()) {
+        if (!board.isEmpty(to) && board.get(to).getColor() == piece.getColor()) {
             String message = String.format("%s, you can't kill a chess piece of your own color", ERROR);
             throw new MoverException(message);
         }

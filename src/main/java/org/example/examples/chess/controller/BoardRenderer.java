@@ -27,7 +27,7 @@ public class BoardRenderer {
                 Coordinate coordinate = new Coordinate(row, column);
                 builder.append(VERT_LINE);
                 String square = EMPTY_SQUARE;
-                if (!board.isEmptyPlace(coordinate)) {
+                if (!board.isEmpty(coordinate)) {
                     square = String.format(FIGURE_SQUARE_TEMPLATE, board.get(coordinate).getFigure());
                 }
                 builder.append(square);

@@ -74,13 +74,13 @@ public class BaseBoard<T> implements Board<T> {
     }
 
     @Override
-    public boolean isEmptyPlace(int row, int column) {
+    public boolean isEmpty(int row, int column) {
         return values[row][column] == null;
     }
 
     @Override
-    public boolean isEmptyPlace(Coordinate coordinate) {
-        return isEmptyPlace(coordinate.row, coordinate.column);
+    public boolean isEmpty(Coordinate coordinate) {
+        return isEmpty(coordinate.row, coordinate.column);
     }
 
 }
